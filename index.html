@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LiAu · Honey</title>
+<style>
+  html { background: #1a0801; min-height: 100%; scroll-behavior: smooth; }
+  body { margin: 0; min-height: 100%; background: transparent; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; overflow-x: hidden; color: #f6e7cf; }
+  #honey { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; z-index: 0; }
+  .content { position: relative; z-index: 1; }
+
+  /* ---------- Hero-секция ---------- */
+  .hero-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+    pointer-events: none;
+  }
+
+  .hero-hint {
+    margin-bottom: 26px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #ffffff;
+    opacity: 0.85;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 2px 10px rgba(0, 0, 0, 0.5);
+    user-select: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeInHint 1.2s ease-out;
+  }
+
+  .scroll-down-arrow {
+    opacity: 0.55;
+    animation: bounceDown 2.2s infinite ease-in-out;
+  }
+
+  @keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+  }
+  @keyframes fadeInHint {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 0.85; transform: translateY(0); }
+  }
+
+  /* ---------- Секция с целым логотипом и описанием ---------- */
+  .brand-section {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, rgba(20, 8, 2, 0.35) 0%, rgba(18, 7, 2, 0.94) 18%, #110602 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 90px 24px;
+    border-top: 1px solid rgba(255, 200, 120, 0.12);
+  }
+
+  .brand-container {
+    max-width: 1140px;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .brand-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      text-align: center;
+    }
+  }
+
+  .brand-logo-card {
+    position: relative;
+    background: radial-gradient(circle at 50% 30%, rgba(45, 20, 8, 0.75) 0%, rgba(20, 8, 3, 0.88) 100%);
+    border: 1px solid rgba(255, 200, 120, 0.22);
+    border-radius: 20px;
+    padding: 48px 36px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .brand-logo-card:hover {
+    border-color: rgba(255, 200, 120, 0.4);
+    transform: translateY(-3px);
+  }
+
+  .brand-logo-svg {
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+    fill: #f7e8d0;
+    filter: drop-shadow(0 6px 20px rgba(233, 162, 59, 0.15));
+  }
+
+  .logo-badge {
+    margin-top: 28px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #e9a23b;
+    opacity: 0.85;
+  }
+
+  .brand-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .brand-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #f0b55a;
+    font-weight: 600;
+  }
+
+  .brand-title {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .brand-desc {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+    color: rgba(246, 231, 207, 0.85);
+  }
+
+  .brand-points {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  .brand-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    text-align: left;
+    background: rgba(255, 200, 120, 0.04);
+    border: 1px solid rgba(255, 200, 120, 0.1);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .point-num {
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #f0b55a;
+    background: rgba(240, 181, 90, 0.15);
+    padding: 2px 6px;
+    border-radius: 6px;
+    margin-top: 2px;
+  }
+
+  .brand-point strong {
+    display: block;
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 3px;
+  }
+
+  .brand-point p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(246, 231, 207, 0.72);
+  }
+
+  .brand-actions {
+    margin-top: 10px;
+  }
+
+  .btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(233, 162, 59, 0.2);
+    color: #f6e7cf;
+    border: 1px solid rgba(233, 162, 59, 0.45);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .btn-download:hover {
+    background: rgba(233, 162, 59, 0.35);
+    border-color: rgba(233, 162, 59, 0.7);
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+
+  #panel {
+    position: fixed; top: 16px; right: 16px; z-index: 10; width: 290px;
+    max-height: calc(100vh - 32px); overflow: auto;
+    background: rgba(20, 10, 4, 0.62); color: #f6e7cf;
+    border: 1px solid rgba(255, 200, 120, 0.18); border-radius: 14px;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.45); font-size: 12.5px; user-select: none;
+  }
+  #panel.hidden { display: none; }
+  #panel header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; cursor: pointer; }
+  #panel header b { font-size: 13.5px; letter-spacing: .3px; }
+  #panel .stats { opacity: .6; font-variant-numeric: tabular-nums; font-size: 11px; }
+  #panel .body { padding: 0 14px 14px; }
+  #panel.collapsed .body { display: none; }
+  #panel h4 { margin: 14px 0 6px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 1.2px; color: #f0b55a; opacity: .85; }
+  .row { margin: 8px 0; }
+  .row .top { display: flex; justify-content: space-between; margin-bottom: 3px; }
+  .row .val { opacity: .7; font-variant-numeric: tabular-nums; }
+  .row input[type=range] { width: 100%; accent-color: #e9a23b; margin: 0; }
+  .row select { width: 100%; background: rgba(0,0,0,.35); color: #f6e7cf; border: 1px solid rgba(255,200,120,.25); border-radius: 8px; padding: 5px 6px; }
+  .btns { display: flex; gap: 8px; margin-top: 10px; }
+  .btns button { flex: 1; background: rgba(233,162,59,.18); color: #f6e7cf; border: 1px solid rgba(233,162,59,.4); border-radius: 8px; padding: 7px 0; cursor: pointer; font: inherit; }
+  .btns button:hover { background: rgba(233,162,59,.32); }
+  .hint { margin-top: 10px; opacity: .45; font-size: 11px; text-align: center; line-height: 1.5; }
+  #drop { position: fixed; inset: 0; z-index: 20; display: none; align-items: center; justify-content: center;
+          background: rgba(20,10,4,.55); color: #f6e7cf; font-size: 22px; border: 3px dashed rgba(233,162,59,.7); }
+  #drop.on { display: flex; }
+</style>
+</head>
+<body>
+<canvas id="honey"></canvas>
+
+<div class="content">
+  <!-- Hero-секция во всю высоту и ширину вьюпорта -->
+  <section class="hero-section">
+    <div class="hero-hint">
+      <span>Нажмите H, чтобы открыть меню настроек</span>
+      <div class="scroll-down-arrow" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция с целым SVG-логотипом и описанием бренда LiAu -->
+  <section class="brand-section" id="brand">
+    <div class="brand-container">
+      <div class="brand-logo-card">
+        <svg class="brand-logo-svg" viewBox="0 0 1130.31 689.59" xmlns="http://www.w3.org/2000/svg" aria-label="Логотип LiAu">
+          <path d="M594.76,243.96l-38.24,37.69-38.24-37.69,38.24-37.69,38.24,37.69ZM556.52,105.76l-89.22,87.95,38.24,37.69,50.98-50.25,50.98,50.25,38.24-37.69-89.22-87.95ZM556.52,5.25l-140.2,138.2,38.24,37.69,101.97-100.51,101.97,100.51,38.24-37.69L556.52,5.25ZM859.9,676.4v8.06h-148.77v-8.18l39.91-6.01-45.4-103.08-115.19.02-45.94,103.07,31.29,6.01v8.18h-99.5v-7.35l29.06-6.84,159.89-324h7.94l154.12,324,32.6,6.13ZM698.89,548.43l-44.12-107.42-54.45,107.78,98.58-.36ZM1125.65,678.6v7.81h-96.32v-36.72c-26.15,28.63-61.65,43.95-100.23,38.96-15.68-2.02-29.74-7.44-40.65-16.74-27.98-23.72-21.5-54.93-21.5-214.71h-32.35v-11.06l86.67-16.62,10.58-2.02.52,181.31c.29,31.4,20.18,45.79,50.45,42.11,19.47-2.36,34.08-11.95,43.83-28.74.96-1.65,1.84-4.45,2.64-8.35l.03-156.63h-32.37v-11.06l.29-.06,76.27-14.61,20.68-3.97v243.02l31.44,8.08ZM460.74,676.66v7.81h-128.67v-7.04l32.35-7.6v-199.13h-32.35v-11.06l97.25-18.64v229.26l31.43,6.39ZM322.1,597.6l-27,87.26H4.72v-4.97l43.97-17.87v-286.77l-43.97-18.1v-4.97h166.65v4.97l-46.01,18.1.23,286.77s55.61.15,67.06-.2c8.19-.25,17.47-1.28,27.86-3.1,52.04-9.13,79.83-37.3,91.12-61.17l10.47.06ZM440.27,368.49l-43.01,41.09c-.2.2-.54.2-.74,0l-44.01-41.31c-.23-.22-.23-.59.02-.79l43.13-42.64c.2-.17.51-.17.71,0l43.89,42.84c.25.2.25.57.02.8Z"/>
+        </svg>
+        <div class="logo-badge">Оригинальный векторный знак · LiAu-01.svg</div>
+      </div>
+
+      <div class="brand-info">
+        <div class="brand-tag">Айдентика бренда</div>
+        <h2 class="brand-title">LiAu · Золото чистой природы</h2>
+        <p class="brand-desc">
+          Оригинальный логотип для бренда <strong>LiAu</strong>. Композиция объединяет природную геометрию пчелиных сот, кристаллическую чистоту и драгоценную текстуру натурального мёда.
+        </p>
+        <div class="brand-points">
+          <div class="brand-point">
+            <span class="point-num">01</span>
+            <div>
+              <strong>Символика знака</strong>
+              <p>Три восходящих шеврона над надписью образуют геометрическую вершину — метафору сотовой ячейки, роста и эталонного качества.</p>
+            </div>
+          </div>
+          <div class="brand-point">
+            <span class="point-num">02</span>
+            <div>
+              <strong>Типографика и акценты</strong>
+              <p>Антиквенная гарнитура с акцентной ромбовидной точкой над литерой «i», синхронизированной с углом наклона верхних шевронов.</p>
+            </div>
+          </div>
+          <div class="brand-point">
+            <span class="point-num">03</span>
+            <div>
+              <strong>Смысл названия</strong>
+              <p>Отсылка к <em>Aurum</em> (Au) — благородному золоту, выраженному в чистейшем медовом янтаре и оптическом преломлении света.</p>
+            </div>
+          </div>
+        </div>
+        <div class="brand-actions">
+          <a href="LiAu-01.svg" download class="btn-download">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Скачать LiAu-01.svg
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="panel" class="hidden">
+  <header id="panelHead"><b>Мёд · настройки</b><span class="stats" id="stats">—</span></header>
+  <div class="body" id="panelBody"></div>
+</div>
+<div id="drop">Отпустите файл логотипа</div>
+<input type="file" id="file" accept="image/png,image/svg+xml,image/webp,image/jpeg" hidden />
+
+<script>
+(() => {
+  // ================= встроенный логотип LiAu (вектор, viewBox 1130×692) =================
+  const LOGO_W = 1130, LOGO_H = 692;
+  const LOGO_PATH =
+    // три шеврона
+    'M556 6 L696 143 L658 181 L556 80 L455 181 L416 143 Z' +
+    'M556 105 L645 192 L607 230 L556 180 L506 230 L467 192 Z' +
+    'M556 206 L594 243 L556 281 L518 243 Z' +
+    // точка над i
+    'M397 325 L440 367 L397 409 L353 367 Z' +
+    // L
+    'M5 352 L170 352 L170 359 L127 376 L127 662 L192 662 C250 662 290 640 310 598 L322 598 L297 690 L5 690 L5 683 L48 666 L48 376 L5 359 Z' +
+    // i
+    'M332 462 L430 441 L430 668 L461 676 L461 690 L332 690 L332 676 L365 668 L365 474 L332 471 Z' +
+    // A (+ треугольное окно)
+    'M659 347 L674 347 L826 668 L860 676 L860 690 L720 690 L720 676 L750 668 L706 568 L591 568 L545 668 L578 676 L578 690 L475 690 L475 676 L508 668 Z' +
+    'M656 441 L600 548 L698 548 Z' +
+    // u
+    'M835 445 L930 428 L930 605 C930 635 945 650 975 650 C1000 650 1020 635 1030 618 L1030 460 L998 458 L998 445 L1093 428 L1093 668 L1125 676 L1125 690 L1030 690 L1030 655 C1010 680 985 692 950 692 C895 692 868 665 868 600 L868 465 L835 462 Z';
+
+  // ================= настройки =================
+  const VARIETIES = {
+    acacia:    { name: 'Акациевый (светлый)', absorb: [0.12, 0.38, 1.7] },
+    linden:    { name: 'Липовый',             absorb: [0.18, 0.60, 2.2] },
+    flower:    { name: 'Цветочный',           absorb: [0.32, 1.05, 2.9] },
+    buckwheat: { name: 'Гречишный (тёмный)',  absorb: [0.60, 1.70, 3.6] },
+    chestnut:  { name: 'Каштановый',          absorb: [0.85, 2.10, 4.0] },
+  };
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DEFAULTS = {
+    speed: reduceMotion ? 0.2 : 0.6, viscosity: 0.6, drip: 0.6, mouse: 1.0,
+    variety: 'flower', density: 1.0, exposure: 1.0,
+    relief: 0.15, gloss: 1.0, bubbles: 0.4,
+    logoOn: 1, logoSize: 0.42, logoX: 0.5, logoY: 0.5, logoInvert: 0,
+    refract: 0.03, disp: 0.35, depth: 1.2, bevel: 0.025, frost: 0.25,
+    glassBright: 1.12, rim: 0.7, spec: 0.8, shadow: 0.45,
+    detail: 4, quality: 0.5, fps: 60,
+  };
+  const NUMERIC_SELECT = new Set(['fps', 'logoOn', 'logoInvert']);
+  let S = { ...DEFAULTS };
+  try { Object.assign(S, JSON.parse(localStorage.getItem('honeySettings') || '{}')); } catch (e) {}
+  const save = () => { try { localStorage.setItem('honeySettings', JSON.stringify(S)); } catch (e) {} };
+
+  const GROUPS = [
+    ['Движение', [
+      ['speed', 'Скорость течения', 0, 2, 0.01],
+      ['viscosity', 'Вязкость', 0, 1, 0.01],
+      ['drip', 'Стекание вниз', 0, 1, 0.01],
+      ['mouse', 'Реакция на курсор', 0, 2, 0.01],
+    ]],
+    ['Мёд', [
+      ['variety', 'Сорт мёда', 'select', VARIETIES],
+      ['density', 'Густота цвета', 0.4, 2, 0.01],
+      ['exposure', 'Яркость', 0.5, 1.8, 0.01],
+    ]],
+    ['Поверхность', [
+      ['relief', 'Рельеф', 0, 0.4, 0.005],
+      ['gloss', 'Блеск', 0, 2, 0.01],
+      ['bubbles', 'Пузырьки', 0, 1, 0.01],
+    ]],
+    ['Логотип', [
+      ['logoOn', 'Показывать', 'select', { 1: 'Да', 0: 'Нет' }],
+      ['logoSize', 'Размер', 0.12, 0.8, 0.01],
+      ['logoX', 'Позиция X', 0, 1, 0.005],
+      ['logoY', 'Позиция Y', 0, 1, 0.005],
+      ['logoInvert', 'Инверсия (светлый лого на тёмном)', 'select', { 0: 'Нет', 1: 'Да' }],
+    ]],
+    ['Стекло · Soft Prism', [
+      ['refract', 'Преломление', 0, 0.08, 0.001],
+      ['disp', 'Призма (дисперсия)', 0, 1, 0.01],
+      ['depth', 'Объём края', 0, 3, 0.01],
+      ['bevel', 'Ширина фаски', 0.005, 0.08, 0.001],
+      ['frost', 'Матовость', 0, 1, 0.01],
+      ['glassBright', 'Яркость стекла', 0.6, 1.6, 0.01],
+      ['rim', 'Свечение края', 0, 1.5, 0.01],
+      ['spec', 'Блики', 0, 1.5, 0.01],
+      ['shadow', 'Тень', 0, 1, 0.01],
+    ]],
+    ['Производительность', [
+      ['detail', 'Детализация (октавы)', 2, 6, 1],
+      ['quality', 'Разрешение рельефа', 0.25, 1, 0.05],
+      ['fps', 'Лимит FPS', 'select', { 24: '24', 30: '30', 60: '60', 0: 'Без лимита' }],
+    ]],
+  ];
+
+  // ================= шейдеры =================
+  const VERT = `#version 300 es
+layout(location=0) in vec2 a;
+void main(){ gl_Position = vec4(a, 0.0, 1.0); }`;
+
+  const NOISE = `
+vec3 permute(vec3 x){ return mod(((x*34.0)+1.0)*x, 289.0); }
+float snoise(vec2 v){
+  const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+  vec2 i  = floor(v + dot(v, C.yy));
+  vec2 x0 = v - i + dot(i, C.xx);
+  vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  vec4 x12 = x0.xyxy + C.xxzz; x12.xy -= i1;
+  i = mod(i, 289.0);
+  vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+  m = m*m; m = m*m;
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+  m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+  vec3 g; g.x = a0.x*x0.x + h.x*x0.y; g.yz = a0.yz*x12.xz + h.yz*x12.yw;
+  return 130.0 * dot(m, g);
+}`;
+
+  // Проход 1: карта высот мёда (уменьшенное разрешение)
+  const FRAG_HEIGHT = `#version 300 es
+precision highp float;
+out vec4 o;
+uniform vec2  uHRes;
+uniform vec2  uMouse;
+uniform float uT, uScale, uDrip, uWarp, uGain, uOct, uMouseStr;
+${NOISE}
+const mat2 ROT = mat2(0.8, -0.6, 0.6, 0.8);
+float fbm(vec2 p, int oct){
+  float a = 0.5, s = 0.0, n = 0.0;
+  for (int i = 0; i < 6; i++){
+    if (i >= oct) break;
+    s += a * snoise(p); n += a;
+    p = ROT * p * 2.0; a *= uGain;
+  }
+  return s / n * 0.9;
+}
+void main(){
+  float aspect = uHRes.x / uHRes.y;
+  vec2 p  = (gl_FragCoord.xy - 0.5 * uHRes) / uHRes.y;
+  vec2 m  = (uMouse - 0.5) * vec2(aspect, 1.0);
+  vec2 dm = p - m;
+  float g = exp(-dot(dm, dm) * 10.0) * uMouseStr;
+  vec2 q = p * vec2(1.0, uDrip) * uScale;
+  q.y += uT * 0.06;
+  q += vec2(-dm.y, dm.x) * g * 0.6;
+  int oc = int(uOct + 0.5);
+  int ow = max(oc - 1, 2);
+  vec2 w1 = vec2(fbm(q + vec2(0.0, uT*0.04), ow),
+                 fbm(q + vec2(5.2, 1.3) - vec2(uT*0.03, 0.0), ow));
+  vec2 w2 = vec2(fbm(q + uWarp*w1 + vec2(1.7, 9.2), ow),
+                 fbm(q + uWarp*w1 + vec2(8.3, 2.8) + uT*0.02, ow));
+  float h = fbm(q + uWarp*0.85*w2, oc) * 0.5 + 0.5 + g * 0.15;
+  o = vec4(h, 0.0, 0.0, 1.0);
+}`;
+
+  // Проход 2: мёд + стеклянный логотип
+  const FRAG_SHADE = `#version 300 es
+precision highp float;
+out vec4 o;
+uniform sampler2D uH;
+uniform sampler2D uSDF;
+uniform vec2  uRes, uHRes;
+uniform float uT, uTime, uScale, uDrip, uRelief, uGloss, uBubbles, uDensity, uExposure;
+uniform vec3  uAbsorb;
+uniform float uLogoOn, uCH;
+uniform vec2  uLogoC, uLogoBox, uSDFRes, uMouseP;
+uniform float uBevel, uDepth, uRefract, uDisp, uFrost, uGlassBright, uRim, uSpec, uShadow;
+
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+
+vec3 bubbles(vec2 p, vec3 col){
+  if (uBubbles <= 0.001) return col;
+  vec2 q = (p * vec2(1.0, uDrip) * uScale + vec2(0.0, uT * 0.06)) * 10.0;
+  vec2 id = floor(q);
+  vec2 f  = fract(q) - 0.5;
+  if (hash(id) > uBubbles * 0.15) return col;
+  vec2 c = (vec2(hash(id + 1.7), hash(id + 4.3)) - 0.5) * 0.5;
+  float rad = 0.05 + 0.1 * hash(id + 9.1);
+  vec2 d = f - c; d.y /= uDrip;
+  float L = length(d);
+  float body = smoothstep(rad, rad * 0.8, L);
+  float rim  = smoothstep(rad * 0.55, rad, L) * body;
+  float hl   = smoothstep(rad * 0.35, 0.0, length(d - vec2(-0.3, 0.3) * rad));
+  col = mix(col, col * 1.15 + vec3(0.05, 0.025, 0.0), body);
+  col = mix(col, col * 0.55, rim * 0.6);
+  return col + hl * 0.45 * body;
+}
+
+// цвет мёда в любой точке экрана (fc — пиксельные координаты), lod — размытие для матового стекла
+vec3 honeyAt(vec2 fc, float lod){
+  vec2 uv = fc / uRes;
+  float sc = exp2(lod);
+  vec2 e  = sc / uHRes;
+  float h  = textureLod(uH, uv, lod).r;
+  float dx = textureLod(uH, uv + vec2(e.x, 0.0), lod).r - textureLod(uH, uv - vec2(e.x, 0.0), lod).r;
+  float dy = textureLod(uH, uv + vec2(0.0, e.y), lod).r - textureLod(uH, uv - vec2(0.0, e.y), lod).r;
+  vec2 grad = vec2(dx, dy) * 0.5 * uHRes.y / sc;
+  vec3 n = normalize(vec3(-grad * uRelief, 1.0));
+
+  float thick = (0.5 + 1.8 * h) * uDensity;
+  vec3 body = vec3(1.05, 0.95, 0.8) * exp(-uAbsorb * thick);
+  body += vec3(1.0, 0.6, 0.12) * exp(-uAbsorb * 0.3) * pow(clamp(1.0 - h, 0.0, 1.0), 3.0) * 0.25;
+
+  vec3 L = normalize(vec3(-0.5, 0.7, 0.6));
+  vec3 V = vec3(0.0, 0.0, 1.0);
+  body *= 0.7 + 0.5 * (dot(n, L) * 0.5 + 0.5);
+  vec3 Hv = normalize(L + V);
+  float nh = max(dot(n, Hv), 0.0);
+  float spec  = pow(nh, 90.0);
+  float sheen = pow(nh, 16.0) * 0.12;
+  vec3 r = reflect(-V, n);
+  float softbox = smoothstep(0.15, 0.35, r.y) * smoothstep(0.55, 0.25, abs(r.x + 0.2));
+  float fres = 0.04 + 0.96 * pow(1.0 - n.z, 5.0);
+  vec3 col = body + vec3(1.0, 0.95, 0.85) * (spec * 0.9 + sheen + softbox * 0.35 + fres * 0.3) * uGloss;
+
+  vec2 p = (fc - 0.5 * uRes) / uRes.y;
+  return bubbles(p, col);
+}
+
+void main(){
+  vec2 fc = gl_FragCoord.xy;
+  vec2 p  = (fc - 0.5 * uRes) / uRes.y;
+  vec3 col = honeyAt(fc, 0.0);
+
+  if (uLogoOn > 0.5){
+    vec2 luv = (p - uLogoC) / uLogoBox + 0.5;
+    if (all(greaterThan(luv, vec2(0.0))) && all(lessThan(luv, vec2(1.0)))){
+      vec2 suv = vec2(luv.x, 1.0 - luv.y);
+      float pxPerTex = uRes.y * uLogoBox.y / uSDFRes.y;
+      float d = texture(uSDF, suv).r;                      // расстояние до края, +внутри (в px текстуры)
+
+      if (uShadow > 0.001){                                 // мягкая тень на мёде
+        vec2 so = vec2(0.006, 0.018) * uCH / uSDFRes;
+        float ds = texture(uSDF, suv - so).r;
+        col *= 1.0 - uShadow * 0.6 * smoothstep(-0.06 * uCH, 0.01 * uCH, ds);
+      }
+
+      float a = clamp(d * pxPerTex + 0.5, 0.0, 1.0);        // сглаженный край
+      if (a > 0.0){
+        vec2 t1 = vec2(1.0 / uSDFRes.x, 0.0), t2 = vec2(0.0, 1.0 / uSDFRes.y);
+        vec2 g = vec2(texture(uSDF, suv + t1).r - texture(uSDF, suv - t1).r,
+                    -(texture(uSDF, suv + t2).r - texture(uSDF, suv - t2).r)) * 0.5;
+        vec2 dir = g / max(length(g), 1e-4);                // внутрь фигуры
+        float b  = clamp(d / uBevel, 0.0, 1.0);
+        float ib = 1.0 - b;
+        float slope = ib / max(sqrt(1.0 - ib * ib), 0.12);  // скруглённая фаска
+        vec3 n = normalize(vec3(-dir * slope * uDepth, 1.0));
+
+        float lod = uFrost * 3.0;
+        vec2 off = -n.xy * uRefract * uRes.y;
+        vec3 refr;
+        if (uDisp > 0.001){
+          refr.r = honeyAt(fc + off * (1.0 - uDisp * 0.6), lod).r;
+          refr.g = honeyAt(fc + off, lod).g;
+          refr.b = honeyAt(fc + off * (1.0 + uDisp * 0.6), lod).b;
+        } else {
+          refr = honeyAt(fc + off, lod);
+        }
+
+        vec3 V = vec3(0.0, 0.0, 1.0);
+        vec3 glass = refr * uGlassBright + vec3(0.06, 0.045, 0.03) * uGlassBright;
+        float fres = pow(1.0 - n.z, 2.0);
+        vec3 rainbow = 0.5 + 0.5 * cos(6.2832 * (vec3(0.0, 0.33, 0.67) + dot(dir, vec2(0.6, 0.8)) * 0.6 + b * 0.8));
+        glass += rainbow * fres * uDisp * 0.6;
+        glass += vec3(1.0, 0.94, 0.85) * fres * uRim * 0.6;
+        float edge = 1.0 - smoothstep(0.0, 2.0, d * pxPerTex);
+        glass += vec3(1.0, 0.95, 0.88) * edge * uRim * 0.35;
+
+        vec3 Lm = normalize(vec3(uMouseP - p, 0.35));       // блик следует за курсором
+        float sp = 0.6 * pow(max(dot(n, normalize(Lm + V)), 0.0), 80.0);
+        vec3 Ls = normalize(vec3(-0.5, 0.7, 0.6));
+        sp += 0.7 * pow(max(dot(n, normalize(Ls + V)), 0.0), 120.0);
+        glass += vec3(1.0, 0.97, 0.9) * sp * uSpec;
+
+        col = mix(col, glass, a);
+      }
+    }
+  }
+
+  col *= uExposure;
+  col *= 1.0 - 0.35 * dot(p * 0.8, p * 0.8);
+  col += (hash(fc + fract(uTime)) - 0.5) / 128.0;
+  o = vec4(clamp(col, 0.0, 1.0), 1.0);
+}`;
+
+  // ================= SDF логотипа (Felzenszwalb EDT) =================
+  function edt1d(f, d, v, z, n) {
+    v[0] = 0; z[0] = -1e20; z[1] = 1e20; let k = 0;
+    for (let q = 1; q < n; q++) {
+      let s = ((f[q] + q * q) - (f[v[k]] + v[k] * v[k])) / (2 * q - 2 * v[k]);
+      while (s <= z[k]) { k--; s = ((f[q] + q * q) - (f[v[k]] + v[k] * v[k])) / (2 * q - 2 * v[k]); }
+      k++; v[k] = q; z[k] = s; z[k + 1] = 1e20;
+    }
+    for (let q = 0, j = 0; q < n; q++) { while (z[j + 1] < q) j++; const r = v[j]; d[q] = (q - r) * (q - r) + f[r]; }
+  }
+  function edt(g, W, H) {
+    const n = Math.max(W, H), f = new Float64Array(n), d = new Float64Array(n), v = new Int32Array(n), z = new Float64Array(n + 1);
+    for (let x = 0; x < W; x++) { for (let y = 0; y < H; y++) f[y] = g[y * W + x]; edt1d(f, d, v, z, H); for (let y = 0; y < H; y++) g[y * W + x] = d[y]; }
+    for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) f[x] = g[y * W + x]; edt1d(f, d, v, z, W); for (let x = 0; x < W; x++) g[y * W + x] = d[x]; }
+  }
+
+  // canvas с логотипом -> {sdf, W, H, cw, ch}
+  function buildLogo(canvasSrc, invert) {
+    const w = canvasSrc.width, h = canvasSrc.height;
+    const px = canvasSrc.getContext('2d').getImageData(0, 0, w, h).data;
+    let transparent = false;
+    for (let i = 3; i < px.length; i += 28) if (px[i] < 250) { transparent = true; break; }
+    const m = new Float32Array(w * h);
+    let x0 = w, y0 = h, x1 = -1, y1 = -1;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const i = y * w + x, a = px[i * 4 + 3] / 255;
+      let v;
+      if (transparent) v = a;
+      else {
+        const l = (0.299 * px[i * 4] + 0.587 * px[i * 4 + 1] + 0.114 * px[i * 4 + 2]) / 255;
+        v = Math.min(1, Math.max(0, ((invert ? l : 1 - l) - 0.15) / 0.7));
+      }
+      m[i] = v;
+      if (v > 0.5) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    }
+    if (x1 < 0) throw new Error('Логотип не найден на изображении');
+    const cw = x1 - x0 + 1, ch = y1 - y0 + 1;
+    const pad = Math.round(Math.max(cw, ch) * 0.1) + 16;
+    const W = cw + 2 * pad, H = ch + 2 * pad, N = W * H;
+    const gOut = new Float64Array(N), gIn = new Float64Array(N);
+    gIn.fill(0); gOut.fill(1e20);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const sx = x - pad + x0, sy = y - pad + y0;
+      const a = (sx >= 0 && sy >= 0 && sx < w && sy < h) ? m[sy * w + sx] : 0;
+      const i = y * W + x;
+      gOut[i] = a >= 1 ? 0 : a <= 0 ? 1e20 : Math.pow(Math.max(0, 0.5 - a), 2);
+      gIn[i]  = a >= 1 ? 1e20 : a <= 0 ? 0 : Math.pow(Math.max(0, a - 0.5), 2);
+    }
+    edt(gOut, W, H); edt(gIn, W, H);
+    const sdf = new Float32Array(N);
+    for (let i = 0; i < N; i++) sdf[i] = Math.sqrt(gIn[i]) - Math.sqrt(gOut[i]);   // + внутри
+    return { sdf, W, H, cw, ch };
+  }
+
+  function builtinCanvas() {
+    const c = document.createElement('canvas'); c.width = LOGO_W; c.height = LOGO_H;
+    const x = c.getContext('2d'); x.fillStyle = '#000';
+    x.fill(new Path2D(LOGO_PATH), 'evenodd');
+    return c;
+  }
+
+  // ================= WebGL =================
+  const canvas = document.getElementById('honey');
+  const statsEl = document.getElementById('stats');
+  let gl, progH, progS, uH = {}, uS = {}, tex, fbo, floatOK = false, sdfTex = null;
+  let hW = 1, hH = 1, raf = 0;
+  let logo = null;            // {sdf, W, H, cw, ch}
+  let logoSource = null;      // dataURL загруженного файла или null (встроенный)
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); statsEl.textContent = 'Ошибка шейдера (F12)'; }
+    return s;
+  }
+  function program(fs, names) {
+    const p = gl.createProgram();
+    gl.attachShader(p, compile(gl.VERTEX_SHADER, VERT));
+    gl.attachShader(p, compile(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) console.error(gl.getProgramInfoLog(p));
+    const u = {}; names.forEach(n => u[n] = gl.getUniformLocation(p, n));
+    return [p, u];
+  }
+
+  function uploadSDF() {
+    if (!gl) return;
+    if (sdfTex) gl.deleteTexture(sdfTex);
+    sdfTex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, sdfTex);
+    gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
+    if (logo) gl.texImage2D(gl.TEXTURE_2D, 0, gl.R16F, logo.W, logo.H, 0, gl.RED, gl.FLOAT, logo.sdf);
+    else gl.texImage2D(gl.TEXTURE_2D, 0, gl.R16F, 1, 1, 0, gl.RED, gl.FLOAT, new Float32Array([-100]));
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  }
+
+  function initGL() {
+    gl = canvas.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false });
+    if (!gl) { statsEl.textContent = 'WebGL2 недоступен'; return false; }
+    floatOK = !!gl.getExtension('EXT_color_buffer_float');
+    [progH, uH] = program(FRAG_HEIGHT, ['uHRes','uMouse','uT','uScale','uDrip','uWarp','uGain','uOct','uMouseStr']);
+    [progS, uS] = program(FRAG_SHADE, ['uH','uSDF','uRes','uHRes','uT','uTime','uScale','uDrip','uRelief','uGloss','uBubbles',
+      'uDensity','uExposure','uAbsorb','uLogoOn','uCH','uLogoC','uLogoBox','uSDFRes','uMouseP','uBevel','uDepth','uRefract',
+      'uDisp','uFrost','uGlassBright','uRim','uSpec','uShadow']);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    tex = null; fbo = null; sdfTex = null;
+    uploadSDF();
+    return true;
+  }
+
+  function makeTarget(w, h) {
+    if (tex) gl.deleteTexture(tex);
+    if (fbo) gl.deleteFramebuffer(fbo);
+    tex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    const alloc = (f) => f
+      ? gl.texImage2D(gl.TEXTURE_2D, 0, gl.R16F, w, h, 0, gl.RED, gl.HALF_FLOAT, null)
+      : gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+    alloc(floatOK);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    fbo = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+    if (floatOK && gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) { floatOK = false; alloc(false); }
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  }
+
+  function resize() {
+    if (!gl) return;
+    const cw = canvas.clientWidth, ch = canvas.clientHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    canvas.width = Math.max(1, Math.round(cw * dpr));
+    canvas.height = Math.max(1, Math.round(ch * dpr));
+    const nw = Math.max(16, Math.round(cw * S.quality));
+    const nh = Math.max(16, Math.round(ch * S.quality));
+    if (nw !== hW || nh !== hH || !tex) { hW = nw; hH = nh; makeTarget(hW, hH); }
+  }
+
+  // ================= загрузка логотипа =================
+  function setLogoFromCanvas(c) {
+    try {
+      const t0 = performance.now();
+      logo = buildLogo(c, !!S.logoInvert);
+      uploadSDF();
+      console.log(`SDF логотипа: ${logo.W}×${logo.H}, ${Math.round(performance.now() - t0)} мс`);
+    } catch (e) { console.error(e); alert('Не удалось обработать логотип: ' + e.message); }
+  }
+  function loadLogoFromDataURL(url, persist) {
+    const img = new Image();
+    img.onload = () => {
+      const w0 = img.naturalWidth || 1024, h0 = img.naturalHeight || 1024;
+      const k = Math.min(1400 / w0, 900 / h0);
+      const c = document.createElement('canvas');
+      c.width = Math.round(w0 * k); c.height = Math.round(h0 * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      logoSource = url;
+      setLogoFromCanvas(c);
+      if (persist) { try { localStorage.setItem('honeyLogo', url); } catch (e) { console.warn('Логотип слишком большой для сохранения'); } }
+    };
+    img.onerror = () => alert('Не удалось открыть изображение');
+    img.src = url;
+  }
+  function loadLogoFile(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const fr = new FileReader();
+    fr.onload = () => loadLogoFromDataURL(fr.result, true);
+    fr.readAsDataURL(file);
+  }
+  function useBuiltinLogo() {
+    logoSource = null;
+    try { localStorage.removeItem('honeyLogo'); } catch (e) {}
+    setLogoFromCanvas(builtinCanvas());
+  }
+  function rebuildLogo() { logoSource ? loadLogoFromDataURL(logoSource, false) : setLogoFromCanvas(builtinCanvas()); }
+
+  const fileInput = document.getElementById('file');
+  fileInput.addEventListener('change', () => { loadLogoFile(fileInput.files[0]); fileInput.value = ''; });
+  const dropEl = document.getElementById('drop');
+  addEventListener('dragover', e => { e.preventDefault(); dropEl.classList.add('on'); });
+  addEventListener('dragleave', e => { if (e.target === dropEl) dropEl.classList.remove('on'); });
+  addEventListener('drop', e => { e.preventDefault(); dropEl.classList.remove('on'); loadLogoFile(e.dataTransfer.files[0]); });
+
+  // ================= анимация =================
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const target = { x: 0.5, y: 0.5 }, mouse = { x: 0.5, y: 0.5 }, glare = { x: 0.3, y: 0.8 };
+  addEventListener('pointermove', e => { target.x = e.clientX / innerWidth; target.y = 1 - e.clientY / innerHeight; });
+
+  let t = 0, last = performance.now(), fpsCount = 0, fpsTime = last;
+
+  function frame(now) {
+    raf = requestAnimationFrame(frame);
+    const fps = +S.fps;
+    if (fps > 0 && now - last < 1000 / fps - 1) return;
+    const dt = Math.min((now - last) / 1000, 0.1);
+    last = now;
+
+    const v = S.viscosity;
+    t += dt * S.speed;
+    const k  = 1 - Math.pow(1 - lerp(0.10, 0.008, v), dt * 60);
+    const k2 = 1 - Math.pow(1 - 0.12, dt * 60);
+    mouse.x += (target.x - mouse.x) * k;  mouse.y += (target.y - mouse.y) * k;
+    glare.x += (target.x - glare.x) * k2; glare.y += (target.y - glare.y) * k2;
+
+    const scale = lerp(1.9, 1.1, v), warp = lerp(2.4, 1.1, v), gain = lerp(0.55, 0.38, v);
+    const drip = 1 - 0.75 * S.drip;
+    const aspect = canvas.width / canvas.height;
+
+    // проход 1 — высоты мёда
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.viewport(0, 0, hW, hH);
+    gl.useProgram(progH);
+    gl.uniform2f(uH.uHRes, hW, hH);
+    gl.uniform2f(uH.uMouse, mouse.x, mouse.y);
+    gl.uniform1f(uH.uT, t);
+    gl.uniform1f(uH.uScale, scale);
+    gl.uniform1f(uH.uDrip, drip);
+    gl.uniform1f(uH.uWarp, warp);
+    gl.uniform1f(uH.uGain, gain);
+    gl.uniform1f(uH.uOct, S.detail);
+    gl.uniform1f(uH.uMouseStr, S.mouse);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.generateMipmap(gl.TEXTURE_2D);
+
+    // проход 2 — мёд + логотип
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.useProgram(progS);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex);    gl.uniform1i(uS.uH, 0);
+    gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, sdfTex); gl.uniform1i(uS.uSDF, 1);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.uniform2f(uS.uRes, canvas.width, canvas.height);
+    gl.uniform2f(uS.uHRes, hW, hH);
+    gl.uniform1f(uS.uT, t);
+    gl.uniform1f(uS.uTime, now / 1000);
+    gl.uniform1f(uS.uScale, scale);
+    gl.uniform1f(uS.uDrip, drip);
+    gl.uniform1f(uS.uRelief, S.relief);
+    gl.uniform1f(uS.uGloss, S.gloss);
+    gl.uniform1f(uS.uBubbles, S.bubbles);
+    gl.uniform1f(uS.uDensity, S.density);
+    gl.uniform1f(uS.uExposure, S.exposure);
+    gl.uniform3fv(uS.uAbsorb, (VARIETIES[S.variety] || VARIETIES.flower).absorb);
+
+    const logoOn = !!(S.logoOn && logo);
+    gl.uniform1f(uS.uLogoOn, logoOn ? 1 : 0);
+    if (logoOn) {
+      let size = S.logoSize;                                     // высота логотипа в долях экрана
+      const maxW = 0.9 * aspect;
+      if (size * logo.cw / logo.ch > maxW) size = maxW * logo.ch / logo.cw;
+      const boxH = size * logo.H / logo.ch, boxW = boxH * logo.W / logo.H;
+      gl.uniform2f(uS.uLogoC, (S.logoX - 0.5) * aspect, 0.5 - S.logoY);
+      gl.uniform2f(uS.uLogoBox, boxW, boxH);
+      gl.uniform2f(uS.uSDFRes, logo.W, logo.H);
+      gl.uniform1f(uS.uCH, logo.ch);
+      gl.uniform2f(uS.uMouseP, (glare.x - 0.5) * aspect, glare.y - 0.5);
+      gl.uniform1f(uS.uBevel, S.bevel * logo.ch);
+      gl.uniform1f(uS.uDepth, S.depth);
+      gl.uniform1f(uS.uRefract, S.refract);
+      gl.uniform1f(uS.uDisp, S.disp);
+      gl.uniform1f(uS.uFrost, S.frost);
+      gl.uniform1f(uS.uGlassBright, S.glassBright);
+      gl.uniform1f(uS.uRim, S.rim);
+      gl.uniform1f(uS.uSpec, S.spec);
+      gl.uniform1f(uS.uShadow, S.shadow);
+    }
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    fpsCount++;
+    if (now - fpsTime > 500) {
+      statsEl.textContent = `${Math.round(fpsCount * 1000 / (now - fpsTime))} fps · ${hW}×${hH}`;
+      fpsCount = 0; fpsTime = now;
+    }
+  }
+
+  canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); cancelAnimationFrame(raf); statsEl.textContent = 'Контекст потерян…'; });
+  canvas.addEventListener('webglcontextrestored', () => { if (initGL()) { resize(); last = performance.now(); raf = requestAnimationFrame(frame); } });
+  addEventListener('resize', resize);
+
+  // ================= панель =================
+  const panel = document.getElementById('panel');
+  const bodyEl = document.getElementById('panelBody');
+  const inputs = {};
+  const fmt = (val, step) => step >= 1 ? String(val) : Number(val).toFixed(step < 0.01 ? 3 : 2);
+
+  GROUPS.forEach(([title, items]) => {
+    const h = document.createElement('h4'); h.textContent = title; bodyEl.appendChild(h);
+    items.forEach(([key, label, min, max, step]) => {
+      const row = document.createElement('div'); row.className = 'row';
+      if (min === 'select') {
+        row.innerHTML = `<div class="top"><span>${label}</span></div>`;
+        const sel = document.createElement('select');
+        Object.entries(max).forEach(([k, v]) => {
+          const o = document.createElement('option'); o.value = k; o.textContent = typeof v === 'string' ? v : v.name; sel.appendChild(o);
+        });
+        sel.value = String(S[key]);
+        sel.addEventListener('change', () => {
+          S[key] = NUMERIC_SELECT.has(key) ? +sel.value : sel.value; save();
+          if (key === 'logoInvert') rebuildLogo();
+        });
+        row.appendChild(sel); inputs[key] = { el: sel };
+      } else {
+        row.innerHTML = `<div class="top"><span>${label}</span><span class="val"></span></div>`;
+        const inp = document.createElement('input');
+        Object.assign(inp, { type: 'range', min, max, step, value: S[key] });
+        const valEl = row.querySelector('.val');
+        valEl.textContent = fmt(S[key], step);
+        inp.addEventListener('input', () => {
+          S[key] = +inp.value; valEl.textContent = fmt(S[key], step);
+          if (key === 'quality') resize();
+          save();
+        });
+        row.appendChild(inp); inputs[key] = { el: inp, valEl, step };
+      }
+      bodyEl.appendChild(row);
+    });
+    if (title === 'Логотип') {
+      const b = document.createElement('div'); b.className = 'btns';
+      b.innerHTML = `<button id="bUpload">Загрузить логотип</button><button id="bBuiltin">Встроенный</button>`;
+      bodyEl.appendChild(b);
+    }
+  });
+
+  const btns = document.createElement('div'); btns.className = 'btns';
+  btns.innerHTML = `<button id="bReset">Сброс</button><button id="bCopy">Копировать</button>`;
+  bodyEl.appendChild(btns);
+  const hint = document.createElement('div'); hint.className = 'hint';
+  hint.innerHTML = 'H — скрыть/показать панель<br>Логотип можно перетащить прямо на страницу';
+  bodyEl.appendChild(hint);
+
+  function syncUI() {
+    Object.entries(inputs).forEach(([k, o]) => { o.el.value = String(S[k]); if (o.valEl) o.valEl.textContent = fmt(S[k], o.step); });
+  }
+  document.getElementById('bUpload').onclick = () => fileInput.click();
+  document.getElementById('bBuiltin').onclick = useBuiltinLogo;
+  document.getElementById('bReset').onclick = () => { const inv = S.logoInvert; S = { ...DEFAULTS }; save(); syncUI(); resize(); if (inv !== S.logoInvert) rebuildLogo(); };
+  document.getElementById('bCopy').onclick = async () => {
+    const txt = JSON.stringify(S, null, 2);
+    try { await navigator.clipboard.writeText(txt); } catch (e) { prompt('Скопируйте настройки:', txt); }
+  };
+  document.getElementById('panelHead').onclick = () => panel.classList.toggle('collapsed');
+  addEventListener('keydown', e => {
+    if (/^[hHрР]$/.test(e.key) && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) panel.classList.toggle('hidden');
+  });
+
+  // ================= старт =================
+  if (initGL()) {
+    resize();
+    let stored = null;
+    try { stored = localStorage.getItem('honeyLogo'); } catch (e) {}
+    stored ? loadLogoFromDataURL(stored, false) : setLogoFromCanvas(builtinCanvas());
+    raf = requestAnimationFrame(frame);
+  }
+})();
+</script>
+</body>
+</html>
