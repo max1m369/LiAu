@@ -359,18 +359,18 @@
   };
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const DEFAULTS = {
-    speed: reduceMotion ? 0.2 : 0.6, viscosity: 0.6, drip: 0.6, mouse: 1.0,
+    speed: reduceMotion ? 0.02 : 0.04, viscosity: 1.0, drip: 1.0, mouse: 1.0,
     variety: 'flower', density: 1.0, exposure: 1.0,
-    relief: 0.15, gloss: 1.0, bubbles: 0.4,
-    logoOn: 1, logoSize: 0.42, logoX: 0.5, logoY: 0.5, logoInvert: 0,
-    refract: 0.03, disp: 0.35, depth: 1.2, bevel: 0.025, frost: 0.25,
-    glassBright: 1.12, rim: 0.7, spec: 0.8, shadow: 0.45,
+    relief: 0.09, gloss: 1.0, bubbles: 0.0,
+    logoOn: 1, logoSize: 0.42, logoX: 0.5, logoY: 0.45, logoInvert: 0,
+    refract: 0.065, disp: 0.3, depth: 0.4, bevel: 0.03, frost: 0.2,
+    glassBright: 1.2, rim: 0.7, spec: 0.8, shadow: 0.1,
     detail: 4, quality: 0.5, fps: 60,
   };
   const NUMERIC_SELECT = new Set(['fps', 'logoOn', 'logoInvert']);
   let S = { ...DEFAULTS };
-  try { Object.assign(S, JSON.parse(localStorage.getItem('honeySettings') || '{}')); } catch (e) {}
-  const save = () => { try { localStorage.setItem('honeySettings', JSON.stringify(S)); } catch (e) {} };
+  try { Object.assign(S, JSON.parse(localStorage.getItem('honeySettings_v2') || '{}')); } catch (e) {}
+  const save = () => { try { localStorage.setItem('honeySettings_v2', JSON.stringify(S)); } catch (e) {} };
 
   const GROUPS = [
     ['Движение', [
